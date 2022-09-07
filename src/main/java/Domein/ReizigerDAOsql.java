@@ -58,7 +58,7 @@ public class ReizigerDAOsql implements ReizigerDAO{
             if (Objects.equals(e.getMessage(), "Geen resultaten werden teruggegeven door de query.")) {
                 return true;
             } else {
-                System.out.println("The program failed to save the reiziger!\n" + e.getMessage());
+                System.out.println("The program failed to update the reiziger!\n" + e.getMessage());
                 return false;
             }
         }
@@ -66,12 +66,34 @@ public class ReizigerDAOsql implements ReizigerDAO{
 
     @Override
     public boolean delete(Reiziger reiziger) {
-        return false;
+        try {
+            String sqlQuery = "DELETE FROM reiziger WHERE reiziger_id=?";
+            PreparedStatement ps = connection.prepareStatement(sqlQuery);
+            ps.setInt(1, reiziger.getReiziger_id());
+
+            ResultSet rs = ps.executeQuery();
+            rs.close();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            if (Objects.equals(e.getMessage(), "Geen resultaten werden teruggegeven door de query.")) {
+                return true;
+            } else {
+                System.out.println("The program failed to delete the reiziger!\n" + e.getMessage());
+                return false;
+            }
+        }
     }
 
     @Override
     public Reiziger findById(int id) {
-        return null;
+        try {
+            String sqlQuery = "SELECT FROM reiziger WHERE reiziger_id=?";
+            PreparedStatement ps = connection.prepareStatement(sqlQuery);
+            ps.setInt(id);
+        } catch (SQLException e) {
+            System.out.println("The reiziger hasn't been found!\n" + e.getMessage());;
+        }
     }
 
     @Override

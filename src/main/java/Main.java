@@ -13,10 +13,12 @@ public class Main {
         Connection db = DriverManager.getConnection(url, username, password);
 
         ReizigerDAOsql reizigerDAOsql = new ReizigerDAOsql(db);
-        Reiziger mijnReiziger = new Reiziger(1, "bbb", "de", "Gggg", Date.valueOf("1970-07-13"));
+        Reiziger mijnReiziger = new Reiziger(6, "bbb", "de", "Gggg", Date.valueOf("1970-07-13"));
 
 //        reizigerDAOsql.save(mijnReiziger);
-        reizigerDAOsql.update(mijnReiziger);
+//        reizigerDAOsql.update(mijnReiziger);
+//        reizigerDAOsql.delete(mijnReiziger);
+        System.out.println(reizigerDAOsql.findById(6));;
 
 //        Statement st = db.createStatement();
 //        ResultSet rs = st.executeQuery("SELECT * FROM reiziger");
