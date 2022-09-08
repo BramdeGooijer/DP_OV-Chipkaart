@@ -1,6 +1,9 @@
+import DAO.Adres.AdresDAO;
+import DAO.Adres.AdresDAOsql;
+import Domein.Adres;
 import Domein.Reiziger;
-import Interface.ReizigerDAO;
-import Interface.ReizigerDAOsql;
+import DAO.Reiziger.ReizigerDAO;
+import DAO.Reiziger.ReizigerDAOsql;
 
 import java.sql.*;
 import java.util.List;
@@ -15,8 +18,12 @@ public class Main {
             Connection db = DriverManager.getConnection(url, username, password);
 
             ReizigerDAOsql reizigerDAOsql = new ReizigerDAOsql(db);
-            Reiziger mijnReiziger = new Reiziger(51, "Appie", null, "Elcik", Date.valueOf("2002-01-26"));
+            AdresDAOsql adresDAOsql = new AdresDAOsql(db);
 
+            reizigerDAOsql.setAdao(adresDAOsql);
+            adresDAOsql.setRdao(reizigerDAOsql);
+
+//            Reiziger mijnReiziger = new Reiziger(51, "Appie", null, "Elcik", Date.valueOf("2002-01-26"));
 //            reizigerDAOsql.save(mijnReiziger);
 //            reizigerDAOsql.update(mijnReiziger);
 //            reizigerDAOsql.delete(mijnReiziger);
@@ -24,7 +31,10 @@ public class Main {
 //            System.out.println(reizigerDAOsql.findByGbDatum("2002-12-03"));
 //            System.out.println(reizigerDAOsql.findAll());
 
-            testReizigerDAO(reizigerDAOsql);
+//            testReizigerDAO(reizigerDAOsql);
+
+
+            testAdresDAO(adresDAOsql, reizigerDAOsql);
 
         } catch (Exception e) {
             System.out.println("Something went wrong!");
@@ -75,5 +85,44 @@ public class Main {
         // Find by geboortedatum
         System.out.println(String.format("[Test] Hier alle reizigers met de geboortedatum 2002-12-03:\n%s", rdao.findByGbDatum("2002-12-03")));
         // Einde P2
+    }
+
+    private static void testAdresDAO(AdresDAO adao, ReizigerDAO rdao) throws SQLException {
+        // een reiziger die we gebruiken met een adres
+        Reiziger mijnReiziger2 = new Reiziger(55, "jantje", null, "Piet", Date.valueOf("2002-01-26"));
+        // het adres die bij de reiziger hoort
+        Adres mijnAdres = new Adres(50, "1218", "5", "juliusnogwatteslaan", "HIllie", mijnReiziger2);
+
+        // test save adres
+        System.out.println("[Test] save adres:");
+        rdao.save(mijnReiziger2);
+        adao.save(mijnAdres);
+
+        // test findAll
+        System.out.println("[Test] findAll:");
+        System.out.println(adao.findAll());
+
+        // test find by reiziger
+        System.out.println("[Test] find by reiziger:");
+        System.out.println(adao.findByReiziger(mijnReiziger2));
+
+        // test update adres
+        Reiziger mijnReiziger3 = new Reiziger(56, "piet", "de", "zeeuw", Date.valueOf("2002-01-27"));
+        Adres mijnAdres3 = new Adres(51, "9999", "420", "welislaan", "Adam", mijnReiziger3);
+        rdao.save(mijnReiziger3);
+        adao.save(mijnAdres3);
+
+        System.out.println("[Test] update Adres");
+        System.out.println(String.format("[Test] eerst is het adres:\n%s", adao.findByReiziger(mijnReiziger3)));
+
+        mijnAdres3 = new Adres(51, "1111", "1", "brediusweg", "zaandam", mijnReiziger3);
+        System.out.println(adao.update(mijnAdres3));
+        System.out.println(String.format("[Test] nu is het adres:\n%s", adao.findByReiziger(mijnReiziger3)));
+
+        // test delete adres
+        System.out.println("[Test delete Adres]");
+        System.out.println(String.format("[Test] Eerst vind hij het adres wel:\n%s", adao.findByReiziger(mijnReiziger3)));
+        System.out.println(adao.delete(mijnAdres3));
+        System.out.println(String.format("[Test] daarna is het adres verwijderd:\n%s", adao.findByReiziger(mijnReiziger3)));
     }
 }

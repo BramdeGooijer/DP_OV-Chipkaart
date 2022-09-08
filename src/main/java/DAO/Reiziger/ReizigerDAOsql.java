@@ -1,5 +1,6 @@
-package Interface;
+package DAO.Reiziger;
 
+import DAO.Adres.AdresDAO;
 import Domein.Reiziger;
 
 import java.sql.*;
@@ -8,9 +9,14 @@ import java.util.List;
 
 public class ReizigerDAOsql implements ReizigerDAO{
     private Connection connection;
+    AdresDAO adao;
 
     public ReizigerDAOsql(Connection connection) {
         this.connection = connection;
+    }
+
+    public void setAdao(AdresDAO adao) {
+        this.adao = adao;
     }
 
     @Override

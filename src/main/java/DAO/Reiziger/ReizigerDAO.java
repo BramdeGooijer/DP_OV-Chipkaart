@@ -1,4 +1,4 @@
-package Interface;
+package DAO.Reiziger;
 
 import Domein.Reiziger;
 
