@@ -1,11 +1,8 @@
 package Domein;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ReizigerDAOsql implements ReizigerDAO{
     private Connection connection;
@@ -25,17 +22,12 @@ public class ReizigerDAOsql implements ReizigerDAO{
             ps.setString(4, reiziger.getAchternaam());
             ps.setDate(5, reiziger.getGeboortedatum());
 
-            ResultSet rs = ps.executeQuery();
-            rs.close();
+            ps.execute();
             ps.close();
             return true;
         } catch (SQLException e) {
-            if (Objects.equals(e.getMessage(), "Geen resultaten werden teruggegeven door de query.")) {
-                return true;
-            } else {
-                System.out.println("The program failed to save the reiziger!\n" + e.getMessage());
-                return false;
-            }
+            System.out.println("The program failed to save the reiziger!\n" + e.getMessage());
+            return false;
         }
     }
 
@@ -50,17 +42,12 @@ public class ReizigerDAOsql implements ReizigerDAO{
             ps.setString(3, reiziger.getAchternaam());
             ps.setDate(4, reiziger.getGeboortedatum());
 
-            ResultSet rs = ps.executeQuery();
-            rs.close();
+            ps.execute();
             ps.close();
             return true;
         } catch (SQLException e) {
-            if (Objects.equals(e.getMessage(), "Geen resultaten werden teruggegeven door de query.")) {
-                return true;
-            } else {
-                System.out.println("The program failed to update the reiziger!\n" + e.getMessage());
-                return false;
-            }
+            System.out.println("The program failed to update the reiziger!\n" + e.getMessage());
+            return false;
         }
     }
 
@@ -71,38 +58,71 @@ public class ReizigerDAOsql implements ReizigerDAO{
             PreparedStatement ps = connection.prepareStatement(sqlQuery);
             ps.setInt(1, reiziger.getReiziger_id());
 
-            ResultSet rs = ps.executeQuery();
-            rs.close();
+            ps.execute();
             ps.close();
             return true;
         } catch (SQLException e) {
-            if (Objects.equals(e.getMessage(), "Geen resultaten werden teruggegeven door de query.")) {
-                return true;
-            } else {
-                System.out.println("The program failed to delete the reiziger!\n" + e.getMessage());
-                return false;
-            }
+            System.out.println("The program failed to delete the reiziger!\n" + e.getMessage());
+            return false;
         }
     }
 
     @Override
     public Reiziger findById(int id) {
         try {
-            String sqlQuery = "SELECT FROM reiziger WHERE reiziger_id=?";
+            String sqlQuery = "SELECT * FROM reiziger WHERE reiziger_id=?";
             PreparedStatement ps = connection.prepareStatement(sqlQuery);
-            ps.setInt(id);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Reiziger(rs.getInt(1), rs.getString(2),rs.getString(3), rs.getString(4), rs.getDate(5));
+            }
+
+            throw new SQLException("Reiziger does not exist");
         } catch (SQLException e) {
             System.out.println("The reiziger hasn't been found!\n" + e.getMessage());;
+            return null;
         }
     }
 
     @Override
     public List<Reiziger> findByGbDatum(String datum) {
-        return null;
+        try {
+            String sqlQuery = "SELECT * FROM reiziger WHERE geboortedatum=?";
+            PreparedStatement ps = connection.prepareStatement(sqlQuery);
+            ps.setDate(1, Date.valueOf(datum));
+
+            ResultSet rs = ps.executeQuery();
+            List<Reiziger> alleReizigers = new ArrayList<>();
+
+            while (rs.next()) {
+                alleReizigers.add(new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5)));
+            }
+
+            return alleReizigers;
+        } catch (SQLException e) {
+            System.out.println("The reiziger hasn't been found!\n" + e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public List<Reiziger> findAll() {
-        return null;
+        try {
+            String sqlQuery = "SELECT * FROM reiziger";
+            PreparedStatement ps = connection.prepareStatement(sqlQuery);
+
+            ResultSet rs = ps.executeQuery();
+            List<Reiziger> alleReizigers = new ArrayList<>();
+
+            while (rs.next()) {
+                alleReizigers.add(new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5)));
+            }
+
+            return alleReizigers;
+        } catch (SQLException e) {
+            System.out.println("Something went wrong!\n" + e.getMessage());
+            return null;
+        }
     }
 }

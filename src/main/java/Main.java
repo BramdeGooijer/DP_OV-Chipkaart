@@ -10,26 +10,22 @@ public class Main {
         String username = "postgres";
         String password = "HBOICTBram";
 
-        Connection db = DriverManager.getConnection(url, username, password);
+        try {
+            Connection db = DriverManager.getConnection(url, username, password);
 
-        ReizigerDAOsql reizigerDAOsql = new ReizigerDAOsql(db);
-        Reiziger mijnReiziger = new Reiziger(6, "bbb", "de", "Gggg", Date.valueOf("1970-07-13"));
+            ReizigerDAOsql reizigerDAOsql = new ReizigerDAOsql(db);
+            Reiziger mijnReiziger = new Reiziger(51, "Appie", null, "Elcik", Date.valueOf("2002-01-26"));
 
-//        reizigerDAOsql.save(mijnReiziger);
-//        reizigerDAOsql.update(mijnReiziger);
-//        reizigerDAOsql.delete(mijnReiziger);
-        System.out.println(reizigerDAOsql.findById(6));;
+//            reizigerDAOsql.save(mijnReiziger);
+//            reizigerDAOsql.update(mijnReiziger);
+//            reizigerDAOsql.delete(mijnReiziger);
+//            System.out.println(reizigerDAOsql.findById(50));
+//            System.out.println(reizigerDAOsql.findByGbDatum("2002-12-03"));
+//            System.out.println(reizigerDAOsql.findAll());
 
-//        Statement st = db.createStatement();
-//        ResultSet rs = st.executeQuery("SELECT * FROM reiziger");
-//        while (rs.next())
-//        {
-//            System.out.println(String.format("Id: %s, Voorletters: %s, Tussenvoegsel: %s, Achternaam: %s, Geboortedatum: %s", rs.getString(1), rs.getString(2),rs.getString(3), rs.getString(4), rs.getString(5)));
-//        }
-//        rs.close();
-//        st.close();
-
-//        Reiziger mijnReiziger = new Reiziger(1, "B.R.", "de", "Gooijer", Date.valueOf("2004-01-26"));
-//        System.out.println(mijnReiziger);
+        } catch (Exception e) {
+            System.out.println("Something went wrong!");
+            System.out.println(e.getMessage());
+        }
     }
 }
