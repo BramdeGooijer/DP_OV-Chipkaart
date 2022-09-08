@@ -74,5 +74,6 @@ public class Main {
 
         // Find by geboortedatum
         System.out.println(String.format("[Test] Hier alle reizigers met de geboortedatum 2002-12-03:\n%s", rdao.findByGbDatum("2002-12-03")));
+        // Einde P2
     }
 }
