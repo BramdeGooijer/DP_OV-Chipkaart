@@ -1,4 +1,6 @@
-package Domein;
+package Interface;
+
+import Domein.Reiziger;
 
 import java.sql.*;
 import java.util.ArrayList;

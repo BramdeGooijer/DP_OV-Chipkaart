@@ -1,8 +1,7 @@
 import Domein.Reiziger;
-import Domein.ReizigerDAOsql;
+import Interface.ReizigerDAOsql;
 
 import java.sql.*;
-import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
