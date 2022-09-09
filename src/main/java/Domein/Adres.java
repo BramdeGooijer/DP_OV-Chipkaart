@@ -42,6 +42,6 @@ public class Adres {
     }
 
     public String toString() {
-        return String.format("- ID: %s, Postcode: %s, Huisnummer: %s, Straat: %s, Woonplaats: %s, Reiziger_ID: %s", this.adres_id, this.postcode, this.huisnummer, this.straat, this.woonplaats, this.reiziger.getReiziger_id());
+        return String.format("%s, Adres {#%s %s %s}", this.reiziger.toString(), this.adres_id, this.postcode, this.huisnummer);
     }
 }

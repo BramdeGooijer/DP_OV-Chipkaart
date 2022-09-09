@@ -31,10 +31,12 @@ public class Main {
 //            System.out.println(reizigerDAOsql.findByGbDatum("2002-12-03"));
 //            System.out.println(reizigerDAOsql.findAll());
 
+
+            // Hier staan de tests voor reiziger en adres
 //            testReizigerDAO(reizigerDAOsql);
-
-
             testAdresDAO(adresDAOsql, reizigerDAOsql);
+
+            db.close();
 
         } catch (Exception e) {
             System.out.println("Something went wrong!");

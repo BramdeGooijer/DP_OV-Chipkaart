@@ -39,11 +39,6 @@ public class Reiziger {
 
     @Override
     public String toString() {
-        return String.format("ID: %s\n" +
-                "Voorletters: %s\n" +
-                "Tussenvoegsel: %s\n" +
-                "Achternaam: %s\n" +
-                "Geboortedatum: %s"
-                , this.reiziger_id, this.voorletters, this.tussenvoegsel, this.achternaam, this.geboortedatum);
+        return String.format("Reiziger {#%s %s. %s %s, geb. %s}", this.getReiziger_id(), this.voorletters, this.tussenvoegsel, this.achternaam, this.geboortedatum);
     }
 }
