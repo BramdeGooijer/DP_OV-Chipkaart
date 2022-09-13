@@ -30,6 +30,10 @@ public class ReizigerDAOsql implements ReizigerDAO{
             ps.setString(4, reiziger.getAchternaam());
             ps.setDate(5, reiziger.getGeboortedatum());
 
+            if (reiziger.getAdres() != null) {
+                adao.save(reiziger.getAdres());
+            }
+
             ps.execute();
             ps.close();
             return true;
@@ -50,6 +54,10 @@ public class ReizigerDAOsql implements ReizigerDAO{
             ps.setString(3, reiziger.getAchternaam());
             ps.setDate(4, reiziger.getGeboortedatum());
 
+            if (reiziger.getAdres() != null) {
+                adao.update(reiziger.getAdres());
+            }
+
             ps.execute();
             ps.close();
             return true;
@@ -65,6 +73,10 @@ public class ReizigerDAOsql implements ReizigerDAO{
             String sqlQuery = "DELETE FROM reiziger WHERE reiziger_id=?";
             PreparedStatement ps = connection.prepareStatement(sqlQuery);
             ps.setInt(1, reiziger.getReiziger_id());
+
+            if (reiziger.getAdres() != null) {
+                adao.delete(reiziger.getAdres());
+            }
 
             ps.execute();
             ps.close();

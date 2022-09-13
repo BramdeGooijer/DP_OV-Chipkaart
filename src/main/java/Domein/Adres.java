@@ -15,6 +15,7 @@ public class Adres {
         this.straat = straat;
         this.woonplaats = woonplaats;
         this.reiziger = reiziger;
+        this.reiziger.setAdres(this);
     }
 
     public int getAdres_id() {
