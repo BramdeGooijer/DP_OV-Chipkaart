@@ -90,7 +90,7 @@ public class AdresDAOsql implements AdresDAO{
 
             ResultSet rs = ps.executeQuery();
             rs.next();
-            return new Adres(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rdao.findById(rs.getInt(6)));
+            return new Adres(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), reiziger);
 
         } catch (SQLException e) {
             System.out.println("Couldn't find Adres!\n" + e.getMessage());

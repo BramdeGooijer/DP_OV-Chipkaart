@@ -43,6 +43,6 @@ public class Adres {
     }
 
     public String toString() {
-        return String.format("%s, Adres {#%s %s %s}", this.reiziger.toString(), this.adres_id, this.postcode, this.huisnummer);
+        return String.format("Adres {#%s %s %s}",this.adres_id, this.postcode, this.huisnummer);
     }
 }

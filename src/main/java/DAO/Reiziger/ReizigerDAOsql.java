@@ -19,6 +19,7 @@ public class ReizigerDAOsql implements ReizigerDAO{
         this.adao = adao;
     }
 
+
     @Override
     public boolean save(Reiziger reiziger) {
         try {

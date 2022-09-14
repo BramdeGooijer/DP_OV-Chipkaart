@@ -48,6 +48,11 @@ public class Reiziger {
 
     @Override
     public String toString() {
-        return String.format("Reiziger {#%s %s. %s %s, geb. %s}", this.getReiziger_id(), this.voorletters, this.tussenvoegsel, this.achternaam, this.geboortedatum);
+        String adres = null;
+        if (this.adres != null) {
+            adres = ", " + this.adres.toString();
+        }
+//        hier komt een if statement om te kijken of er een adres is
+        return String.format("Reiziger {#%s %s. %s %s, geb. %s}%s", this.getReiziger_id(), this.voorletters, this.tussenvoegsel, this.achternaam, this.geboortedatum, adres);
     }
 }
