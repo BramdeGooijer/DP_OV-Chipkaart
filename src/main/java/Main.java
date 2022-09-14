@@ -33,7 +33,7 @@ public class Main {
 
 
             // Hier staan de tests voor reiziger en adres
-//            testReizigerDAO(reizigerDAOsql);
+            testReizigerDAO(reizigerDAOsql);
             testAdresDAO(adresDAOsql, reizigerDAOsql);
 
             db.close();
@@ -64,7 +64,7 @@ public class Main {
 
         // Maak een nieuwe reiziger aan en persisteer deze in de database
         String gbdatum = "1981-03-14";
-        Reiziger sietske = new Reiziger(77, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
+        Reiziger sietske = new Reiziger(100, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
         System.out.print("[Test] Eerst " + reizigers.size() + " reizigers, na ReizigerDAO.save() ");
         rdao.save(sietske);
         reizigers = rdao.findAll();
@@ -72,17 +72,19 @@ public class Main {
 
         // Voeg aanvullende tests van de ontbrekende CRUD-operaties in.
         // Update een bestaande reiziger en persisteer deze in de database
-        Reiziger updatedReiziger = new Reiziger(50, "Bram", "de", "Gooijer", Date.valueOf("2004-01-26"));
-        System.out.println(String.format("[Test] Eerst is de Reiziger:\n %s\n -----En na het updaten is het-----", rdao.findById(50)));
+        Reiziger updatedReiziger = new Reiziger(101, "Henk", "de", "Gooijer", Date.valueOf("2004-01-26"));
+        rdao.save(updatedReiziger);
+        updatedReiziger = new Reiziger(101, "Bram", "de", "Gooijer", Date.valueOf("2004-01-26"));
+        System.out.println(String.format("[Test] Eerst is de Reiziger:\n %s\n -----En na het updaten is het-----", rdao.findById(101)));
         rdao.update(updatedReiziger);
-        System.out.println(rdao.findById(50));
+        System.out.println(rdao.findById(101));
 
         //Verwijder een reiziger uit de db
-        Reiziger deletedReiziger = new Reiziger(52, "Jeroen", null, "Fredrikzs", Date.valueOf("2000-01-01"));
+        Reiziger deletedReiziger = new Reiziger(102, "Jeroen", null, "Fredrikzs", Date.valueOf("2000-01-01"));
         rdao.save(deletedReiziger);
         System.out.println(String.format("\n[Test] Eerst is de lijst met alle reizigers:\n%s", rdao.findAll()));
         rdao.delete(deletedReiziger);
-        System.out.println(String.format("[Test] Daarna ziet de lijst er zo uit:%s", rdao.findAll()));
+        System.out.println(String.format("[Test] Daarna ziet de lijst er zo uit:\n%s", rdao.findAll()));
 
         // Find by geboortedatum
         System.out.println(String.format("[Test] Hier alle reizigers met de geboortedatum 2002-12-03:\n%s", rdao.findByGbDatum("2002-12-03")));
@@ -91,14 +93,15 @@ public class Main {
 
     private static void testAdresDAO(AdresDAO adao, ReizigerDAO rdao) throws SQLException {
         // een reiziger die we gebruiken met een adres
-        Reiziger mijnReiziger2 = new Reiziger(55, "jantje", null, "Piet", Date.valueOf("2002-01-26"));
+        Reiziger mijnReiziger2 = new Reiziger(103, "jantje", null, "Piet", Date.valueOf("2002-01-26"));
+        rdao.save(mijnReiziger2);
         // het adres die bij de reiziger hoort
-        Adres mijnAdres = new Adres(50, "1218", "5", "juliusnogwatteslaan", "HIllie", mijnReiziger2);
+        Adres mijnAdres = new Adres(200, "1218", "5", "juliusnogwatteslaan", "HIllie", mijnReiziger2);
 
         // test save adres
         System.out.println("[Test] save adres:");
-        rdao.save(mijnReiziger2);
         adao.save(mijnAdres);
+        System.out.println(adao.findByReiziger(mijnReiziger2));
 
         // test findAll
         System.out.println("[Test] findAll:");
@@ -109,15 +112,15 @@ public class Main {
         System.out.println(adao.findByReiziger(mijnReiziger2));
 
         // test update adres
-        Reiziger mijnReiziger3 = new Reiziger(56, "piet", "de", "zeeuw", Date.valueOf("2002-01-27"));
-        Adres mijnAdres3 = new Adres(51, "9999", "420", "welislaan", "Adam", mijnReiziger3);
+        Reiziger mijnReiziger3 = new Reiziger(104, "piet", "de", "zeeuw", Date.valueOf("2002-01-27"));
         rdao.save(mijnReiziger3);
+        Adres mijnAdres3 = new Adres(201, "9999", "420", "welislaan", "Adam", mijnReiziger3);
         adao.save(mijnAdres3);
 
         System.out.println("[Test] update Adres");
         System.out.println(String.format("[Test] eerst is het adres:\n%s", adao.findByReiziger(mijnReiziger3)));
 
-        mijnAdres3 = new Adres(51, "1111", "1", "brediusweg", "zaandam", mijnReiziger3);
+        mijnAdres3 = new Adres(201, "1111", "1", "brediusweg", "zaandam", mijnReiziger3);
         System.out.println(adao.update(mijnAdres3));
         System.out.println(String.format("[Test] nu is het adres:\n%s", adao.findByReiziger(mijnReiziger3)));
 

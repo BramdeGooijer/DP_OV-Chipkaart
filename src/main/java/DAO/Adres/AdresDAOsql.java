@@ -93,6 +93,9 @@ public class AdresDAOsql implements AdresDAO{
             return new Adres(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), reiziger);
 
         } catch (SQLException e) {
+            if(e.getMessage().equals("ResultSet not positioned properly, perhaps you need to call next.")) {
+                return null;
+            }
             System.out.println("Couldn't find Adres!\n" + e.getMessage());
             return null;
         }

@@ -48,7 +48,7 @@ public class Reiziger {
 
     @Override
     public String toString() {
-        String adres = null;
+        String adres = "";
         if (this.adres != null) {
             adres = ", " + this.adres.toString();
         }

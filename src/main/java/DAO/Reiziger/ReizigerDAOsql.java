@@ -96,7 +96,9 @@ public class ReizigerDAOsql implements ReizigerDAO{
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new Reiziger(rs.getInt(1), rs.getString(2),rs.getString(3), rs.getString(4), rs.getDate(5));
+                Reiziger deReiziger = new Reiziger(rs.getInt(1), rs.getString(2),rs.getString(3), rs.getString(4), rs.getDate(5));
+                deReiziger.setAdres(adao.findByReiziger(deReiziger));
+                return deReiziger;
             }
 
             throw new SQLException("Reiziger does not exist");
@@ -117,7 +119,9 @@ public class ReizigerDAOsql implements ReizigerDAO{
             List<Reiziger> alleReizigers = new ArrayList<>();
 
             while (rs.next()) {
-                alleReizigers.add(new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5)));
+                Reiziger deReiziger = new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5));
+                deReiziger.setAdres(adao.findByReiziger(deReiziger));
+                alleReizigers.add(deReiziger);
             }
 
             return alleReizigers;
@@ -137,7 +141,10 @@ public class ReizigerDAOsql implements ReizigerDAO{
             List<Reiziger> alleReizigers = new ArrayList<>();
 
             while (rs.next()) {
-                alleReizigers.add(new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5)));
+                Reiziger deReiziger = new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5));
+                deReiziger.setAdres(adao.findByReiziger(deReiziger));
+
+                alleReizigers.add(deReiziger);
             }
 
             return alleReizigers;
