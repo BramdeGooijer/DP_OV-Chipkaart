@@ -90,6 +90,7 @@ public class AdresDAOsql implements AdresDAO{
 
             ResultSet rs = ps.executeQuery();
             rs.next();
+//            de reiziger werd ten onrechte uit de database gehaald en dat had ik al in een eerdere commit gefixt hetzelfde geld bij findAll
             return new Adres(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), reiziger);
 
         } catch (SQLException e) {
@@ -111,6 +112,7 @@ public class AdresDAOsql implements AdresDAO{
             List<Adres> alleAdressen = new ArrayList<>();
 
             while (rs.next()) {
+                // findAll haalt nu ook de reiziger op bij het adres, hij is toegevoegd aan het einde van de line hieronder
                 alleAdressen.add(new Adres(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rdao.findById(rs.getInt(6))));
             }
 
