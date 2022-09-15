@@ -1,6 +1,6 @@
 package Domein;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class OVChipkaart {
     private int kaart_nummer;
