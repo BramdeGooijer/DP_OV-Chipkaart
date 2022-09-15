@@ -1,5 +1,6 @@
 package DAO.OVChipkaart;
 
+import DAO.Reiziger.ReizigerDAO;
 import Domein.OVChipkaart;
 import Domein.Reiziger;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class OVChipkaartDSOpsql implements OVChipkaartDAO {
     private Connection connection;
+    private ReizigerDAO rdao;
 
     @Override
     public boolean save(OVChipkaart ovChipkaart) {
@@ -92,6 +94,21 @@ public class OVChipkaartDSOpsql implements OVChipkaartDAO {
 
     @Override
     public List<OVChipkaart> findAll() {
-        return null;
+        try {
+            String sqlQuery = "SELECT * FROM ov_chipkaart";
+            PreparedStatement ps = connection.prepareStatement(sqlQuery);
+
+            ResultSet rs = ps.executeQuery();
+            List<OVChipkaart> alleOVChipkaarten = new ArrayList<>();
+
+            while (rs.next()) {
+                alleOVChipkaarten.add(new OVChipkaart(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getInt(4), rdao.findById(rs.getInt(5))));
+            }
+
+            return alleOVChipkaarten;
+        } catch (Exception e) {
+            System.out.println("Something went wrong!\n" + e.getMessage());
+            return null;
+        }
     }
 }
