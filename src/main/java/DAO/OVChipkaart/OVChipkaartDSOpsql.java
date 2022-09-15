@@ -53,7 +53,18 @@ public class OVChipkaartDSOpsql implements OVChipkaartDAO {
 
     @Override
     public boolean delete(OVChipkaart ovChipkaart) {
-        return false;
+        try {
+            String sqlQuery = "DELETE FROM ov_chipkaart WHERE kaart_nummer=?";
+            PreparedStatement ps = connection.prepareStatement(sqlQuery);
+            ps.setInt(1, ovChipkaart.getKaart_nummer());
+
+            ps.execute();
+            ps.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Something went wrong!\n" + e.getMessage());
+            return false;
+        }
     }
 
     @Override
