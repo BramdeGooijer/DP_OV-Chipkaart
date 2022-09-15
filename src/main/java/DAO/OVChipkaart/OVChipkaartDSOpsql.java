@@ -5,7 +5,9 @@ import Domein.Reiziger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OVChipkaartDSOpsql implements OVChipkaartDAO {
@@ -69,7 +71,23 @@ public class OVChipkaartDSOpsql implements OVChipkaartDAO {
 
     @Override
     public List<OVChipkaart> findByReiziger(Reiziger reiziger) {
-        return null;
+        try {
+            String sqlQuery = "SELECT * FROM ov_chipkaart WHERE reiziger_id=?";
+            PreparedStatement ps = connection.prepareStatement(sqlQuery);
+            ps.setInt(1, reiziger.getReiziger_id());
+
+            ResultSet rs = ps.executeQuery();
+            List<OVChipkaart> alleOVChipkaarten = new ArrayList<>();
+            while (rs.next()) {
+                alleOVChipkaarten.add(new OVChipkaart(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getInt(4), reiziger));
+            }
+
+            return alleOVChipkaarten;
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong!\n" + e.getMessage());
+            return null;
+        }
     }
 
     @Override
