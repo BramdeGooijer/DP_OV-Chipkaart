@@ -34,7 +34,21 @@ public class OVChipkaartDSOpsql implements OVChipkaartDAO {
 
     @Override
     public boolean update(OVChipkaart ovChipkaart) {
-        return false;
+        try {
+            String sqlQuery = "UPDATE ov_chipkaart SET geldig_tot=?, klasse=?, saldo=? WHERE kaart_nummer=?";
+            PreparedStatement ps = connection.prepareStatement(sqlQuery);
+            ps.setDate(1, ovChipkaart.getGeldig_tot());
+            ps.setInt(2, ovChipkaart.getKlasse());
+            ps.setInt(3, ovChipkaart.getSaldo());
+            ps.setInt(4, ovChipkaart.getKaart_nummer());
+
+            ps.execute();
+            ps.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Something went wrong!\n" + e.getMessage());
+            return false;
+        }
     }
 
     @Override
