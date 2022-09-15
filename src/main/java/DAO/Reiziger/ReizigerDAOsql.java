@@ -1,6 +1,8 @@
 package DAO.Reiziger;
 
 import DAO.Adres.AdresDAO;
+import DAO.OVChipkaart.OVChipkaartDAO;
+import Domein.OVChipkaart;
 import Domein.Reiziger;
 
 import java.sql.*;
@@ -10,6 +12,7 @@ import java.util.List;
 public class ReizigerDAOsql implements ReizigerDAO{
     private Connection connection;
     AdresDAO adao;
+    OVChipkaartDAO odao;
 
     public ReizigerDAOsql(Connection connection) {
         this.connection = connection;
@@ -17,6 +20,10 @@ public class ReizigerDAOsql implements ReizigerDAO{
 
     public void setAdao(AdresDAO adao) {
         this.adao = adao;
+    }
+
+    public void setOdao(OVChipkaartDAO odao) {
+        this.odao = odao;
     }
 
 
@@ -33,6 +40,13 @@ public class ReizigerDAOsql implements ReizigerDAO{
 
             if (reiziger.getAdres() != null) {
                 adao.save(reiziger.getAdres());
+            }
+
+            if (reiziger.getAlleOVChipkaarten() != null || reiziger.getAlleOVChipkaarten().size() != 0) {
+                for (OVChipkaart perOVChipkaart : reiziger.getAlleOVChipkaarten()) {
+                    odao.save(perOVChipkaart);
+                }
+
             }
 
             ps.execute();
@@ -59,6 +73,13 @@ public class ReizigerDAOsql implements ReizigerDAO{
                 adao.update(reiziger.getAdres());
             }
 
+            if (reiziger.getAlleOVChipkaarten() != null || reiziger.getAlleOVChipkaarten().size() != 0) {
+                for (OVChipkaart perOVChipkaart : reiziger.getAlleOVChipkaarten()) {
+                    odao.update(perOVChipkaart);
+                }
+
+            }
+
             ps.execute();
             ps.close();
             return true;
@@ -77,6 +98,13 @@ public class ReizigerDAOsql implements ReizigerDAO{
 
             if (reiziger.getAdres() != null) {
                 adao.delete(reiziger.getAdres());
+            }
+
+            if (reiziger.getAlleOVChipkaarten() != null || reiziger.getAlleOVChipkaarten().size() != 0) {
+                for (OVChipkaart perOVChipkaart : reiziger.getAlleOVChipkaarten()) {
+                    odao.delete(perOVChipkaart);
+                }
+
             }
 
             ps.execute();
@@ -98,6 +126,10 @@ public class ReizigerDAOsql implements ReizigerDAO{
             while (rs.next()) {
                 Reiziger deReiziger = new Reiziger(rs.getInt(1), rs.getString(2),rs.getString(3), rs.getString(4), rs.getDate(5));
                 deReiziger.setAdres(adao.findByReiziger(deReiziger));
+
+                for (OVChipkaart perOVChipkaart : odao.findByReiziger(deReiziger)) {
+                    deReiziger.addOVChipkaart(perOVChipkaart);
+                }
                 return deReiziger;
             }
 
@@ -121,6 +153,11 @@ public class ReizigerDAOsql implements ReizigerDAO{
             while (rs.next()) {
                 Reiziger deReiziger = new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5));
                 deReiziger.setAdres(adao.findByReiziger(deReiziger));
+
+                for (OVChipkaart perOVChipkaart : odao.findByReiziger(deReiziger)) {
+                    deReiziger.addOVChipkaart(perOVChipkaart);
+                }
+
                 alleReizigers.add(deReiziger);
             }
 
@@ -143,6 +180,10 @@ public class ReizigerDAOsql implements ReizigerDAO{
             while (rs.next()) {
                 Reiziger deReiziger = new Reiziger(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDate(5));
                 deReiziger.setAdres(adao.findByReiziger(deReiziger));
+
+                for (OVChipkaart perOVChipkaart : odao.findByReiziger(deReiziger)) {
+                    deReiziger.addOVChipkaart(perOVChipkaart);
+                }
 
                 alleReizigers.add(deReiziger);
             }

@@ -25,6 +25,10 @@ public class Reiziger {
         alleOVChipkaarten.add(ovChipkaart);
     }
 
+    public List<OVChipkaart> getAlleOVChipkaarten() {
+        return alleOVChipkaarten;
+    }
+
     public int getReiziger_id() {
         return reiziger_id;
     }

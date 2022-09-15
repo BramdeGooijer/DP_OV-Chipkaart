@@ -7,13 +7,20 @@ import Domein.Reiziger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OVChipkaartDSOpsql implements OVChipkaartDAO {
+public class OVChipkaartDAOpsql implements OVChipkaartDAO {
     private Connection connection;
     private ReizigerDAO rdao;
+
+    public OVChipkaartDAOpsql(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void setRdao(ReizigerDAO rdao) {
+        this.rdao = rdao;
+    }
 
     @Override
     public boolean save(OVChipkaart ovChipkaart) {
