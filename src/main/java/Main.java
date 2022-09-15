@@ -131,6 +131,7 @@ public class Main {
 
     public static void testOVChipkaart(OVChipkaartDAO odao, ReizigerDAO rdao) {
         // Test de save functie
+        // Save
         Reiziger testReiziger1 = new Reiziger(300, "K", "van", "Karel", Date.valueOf("2000-01-01"));
         System.out.println("    [INFO]      Reiziger wordt opgeslagen");
         rdao.save(testReiziger1);
@@ -141,6 +142,47 @@ public class Main {
         odao.save(testOVChipkaart1);
         System.out.println(odao.findByReiziger(testReiziger1));
 
+        // Update
+        System.out.println("    [INFO]      Eerst ziet de ovchipkaart er zo uit:");
+        System.out.println(odao.findByReiziger(testReiziger1));
+        testOVChipkaart1 = new OVChipkaart(300, Date.valueOf("2025-01-01"), 2, 500, testReiziger1);
+        System.out.println("    [INFO]      OVChipkaart wordt geupdate");
+        odao.update(testOVChipkaart1);
+        System.out.println("    [INFO]      En na het updaten zo:");
+        System.out.println(odao.findByReiziger(testReiziger1));
 
+        // Delete
+        OVChipkaart testOVChipkaart2 = new OVChipkaart(301, Date.valueOf("2030-01-01"), 1, 200, testReiziger1);
+        System.out.println("    [INFO]      OVChipkaart wordt opgeslagen");
+        odao.save(testOVChipkaart2);
+        System.out.println("    [INFO]      Eerst ziet de lijst met alle ovchipkaarten van de rijziger er zo uit:");
+        System.out.println(odao.findByReiziger(testReiziger1));
+        System.out.println("    [INFO]      OVChipkaart wordt verwijderd");
+        odao.delete(testOVChipkaart2);
+        System.out.println("    [INFO]      Na het verwijderen ziet de lijst er zo uit:");
+        System.out.println(odao.findByReiziger(testReiziger1));
+
+        // findAll()
+        System.out.println("    [INFO]      Dit is de lijst van alle ovchipkaarten:");
+        System.out.println(odao.findAll());
+
+        // ovchipkaarten in de toString van reiziger
+        Reiziger testReiziger2 = new Reiziger(301, "B", "van", "Doorn", Date.valueOf("2000-01-01"));
+        System.out.println("    [INFO]      Reiziger wordt opgeslagen");
+        rdao.save(testReiziger2);
+        System.out.println(rdao.findById(301));
+
+        OVChipkaart testOVChipkaart3 = new OVChipkaart(302, Date.valueOf("2025-01-01"), 1, 10, testReiziger2);
+        System.out.println("    [INFO]      OVChipkaart wordt opgeslagen");
+        odao.save(testOVChipkaart3);
+        OVChipkaart testOVChipkaart4 = new OVChipkaart(303, Date.valueOf("2025-01-01"), 2, 200, testReiziger2);
+        System.out.println("    [INFO]      OVChipkaart wordt opgeslagen");
+        odao.save(testOVChipkaart4);
+        OVChipkaart testOVChipkaart5 = new OVChipkaart(304, Date.valueOf("2025-01-01"), 3, 500, testReiziger2);
+        System.out.println("    [INFO]      OVChipkaart wordt opgeslagen");
+        odao.save(testOVChipkaart5);
+
+        System.out.println("    [INFO]      OVChipkaarten getoond via de toString van reiziger:");
+        System.out.println(rdao.findById(301));
     }
 }

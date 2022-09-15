@@ -15,6 +15,7 @@ public class OVChipkaart {
         this.klasse = klasse;
         this.saldo = saldo;
         this.reiziger = reiziger;
+        reiziger.addOVChipkaart(this);
     }
 
     public int getKaart_nummer() {

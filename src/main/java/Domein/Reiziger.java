@@ -63,7 +63,13 @@ public class Reiziger {
         if (this.adres != null) {
             adres = ", " + this.adres.toString();
         }
+
+        String ovchipkaart = "";
+        if (this.alleOVChipkaarten.size() != 0) {
+            ovchipkaart = ", " + alleOVChipkaarten;
+        }
+
 //        hier komt een if statement om te kijken of er een adres is
-        return String.format("Reiziger {#%s %s. %s %s, geb. %s}%s", this.getReiziger_id(), this.voorletters, this.tussenvoegsel, this.achternaam, this.geboortedatum, adres);
+        return String.format("Reiziger {#%s %s. %s %s, geb. %s}%s%s", this.getReiziger_id(), this.voorletters, this.tussenvoegsel, this.achternaam, this.geboortedatum, adres, ovchipkaart);
     }
 }

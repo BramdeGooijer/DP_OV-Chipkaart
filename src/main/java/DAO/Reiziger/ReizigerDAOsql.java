@@ -127,9 +127,8 @@ public class ReizigerDAOsql implements ReizigerDAO{
                 Reiziger deReiziger = new Reiziger(rs.getInt(1), rs.getString(2),rs.getString(3), rs.getString(4), rs.getDate(5));
                 deReiziger.setAdres(adao.findByReiziger(deReiziger));
 
-                for (OVChipkaart perOVChipkaart : odao.findByReiziger(deReiziger)) {
-                    deReiziger.addOVChipkaart(perOVChipkaart);
-                }
+                odao.findByReiziger(deReiziger);
+
                 return deReiziger;
             }
 
