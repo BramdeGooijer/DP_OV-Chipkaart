@@ -1,6 +1,9 @@
 import DAO.Adres.AdresDAO;
 import DAO.Adres.AdresDAOsql;
+import DAO.OVChipkaart.OVChipkaartDAO;
+import DAO.OVChipkaart.OVChipkaartDAOpsql;
 import Domein.Adres;
+import Domein.OVChipkaart;
 import Domein.Reiziger;
 import DAO.Reiziger.ReizigerDAO;
 import DAO.Reiziger.ReizigerDAOsql;
@@ -19,22 +22,17 @@ public class Main {
 
             ReizigerDAOsql reizigerDAOsql = new ReizigerDAOsql(db);
             AdresDAOsql adresDAOsql = new AdresDAOsql(db);
+            OVChipkaartDAOpsql ovChipkaartDAOpsql = new OVChipkaartDAOpsql(db);
 
             reizigerDAOsql.setAdao(adresDAOsql);
+            reizigerDAOsql.setOdao(ovChipkaartDAOpsql);
             adresDAOsql.setRdao(reizigerDAOsql);
-
-//            Reiziger mijnReiziger = new Reiziger(51, "Appie", null, "Elcik", Date.valueOf("2002-01-26"));
-//            reizigerDAOsql.save(mijnReiziger);
-//            reizigerDAOsql.update(mijnReiziger);
-//            reizigerDAOsql.delete(mijnReiziger);
-//            System.out.println(reizigerDAOsql.findById(50));
-//            System.out.println(reizigerDAOsql.findByGbDatum("2002-12-03"));
-//            System.out.println(reizigerDAOsql.findAll());
-
+            ovChipkaartDAOpsql.setRdao(reizigerDAOsql);
 
             // Hier staan de tests voor reiziger en adres
-            testReizigerDAO(reizigerDAOsql);
-            testAdresDAO(adresDAOsql, reizigerDAOsql);
+//            testReizigerDAO(reizigerDAOsql);
+//            testAdresDAO(adresDAOsql, reizigerDAOsql);
+            testOVChipkaart(ovChipkaartDAOpsql, reizigerDAOsql);
 
             db.close();
 
@@ -129,5 +127,20 @@ public class Main {
         System.out.println(String.format("[Test] Eerst vind hij het adres wel:\n%s", adao.findByReiziger(mijnReiziger3)));
         System.out.println(adao.delete(mijnAdres3));
         System.out.println(String.format("[Test] daarna is het adres verwijderd:\n%s", adao.findByReiziger(mijnReiziger3)));
+    }
+
+    public static void testOVChipkaart(OVChipkaartDAO odao, ReizigerDAO rdao) {
+        // Test de save functie
+        Reiziger testReiziger1 = new Reiziger(300, "K", "van", "Karel", Date.valueOf("2000-01-01"));
+        System.out.println("    [INFO]      Reiziger wordt opgeslagen");
+        rdao.save(testReiziger1);
+        System.out.println(rdao.findById(300));
+
+        OVChipkaart testOVChipkaart1 = new OVChipkaart(300, Date.valueOf("2025-01-01"), 1, 500, testReiziger1);
+        System.out.println("    [INFO]      OVChipkaart wordt opgeslagen");
+        odao.save(testOVChipkaart1);
+        System.out.println(odao.findByReiziger(testReiziger1));
+
+
     }
 }
