@@ -30,8 +30,8 @@ public class Main {
             ovChipkaartDAOpsql.setRdao(reizigerDAOsql);
 
             // Hier staan de tests voor reiziger en adres
-//            testReizigerDAO(reizigerDAOsql);
-//            testAdresDAO(adresDAOsql, reizigerDAOsql);
+            testReizigerDAO(reizigerDAOsql);
+            testAdresDAO(adresDAOsql, reizigerDAOsql);
             testOVChipkaart(ovChipkaartDAOpsql, reizigerDAOsql);
 
             db.close();
