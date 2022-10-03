@@ -8,13 +8,15 @@ public class OVChipkaart {
     private int klasse;
     private int saldo;
     private Reiziger reiziger;
+    private ov_chipkaart_product product;
 
-    public OVChipkaart(int kaart_nummer, Date geldig_tot, int klasse, int saldo, Reiziger reiziger) {
+    public OVChipkaart(int kaart_nummer, Date geldig_tot, int klasse, int saldo, Reiziger reiziger, ov_chipkaart_product product) {
         this.kaart_nummer = kaart_nummer;
         this.geldig_tot = geldig_tot;
         this.klasse = klasse;
         this.saldo = saldo;
         this.reiziger = reiziger;
+        this.product = product;
         reiziger.addOVChipkaart(this);
     }
 

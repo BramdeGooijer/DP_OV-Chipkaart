@@ -88,7 +88,7 @@ public class OVChipkaartDAOpsql implements OVChipkaartDAO {
             ResultSet rs = ps.executeQuery();
             List<OVChipkaart> alleOVChipkaarten = new ArrayList<>();
             while (rs.next()) {
-                alleOVChipkaarten.add(new OVChipkaart(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getInt(4), reiziger));
+                alleOVChipkaarten.add(new OVChipkaart(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getInt(4), reiziger, null));
             }
 
             return alleOVChipkaarten;
@@ -109,7 +109,7 @@ public class OVChipkaartDAOpsql implements OVChipkaartDAO {
             List<OVChipkaart> alleOVChipkaarten = new ArrayList<>();
 
             while (rs.next()) {
-                alleOVChipkaarten.add(new OVChipkaart(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getInt(4), rdao.findById(rs.getInt(5))));
+                alleOVChipkaarten.add(new OVChipkaart(rs.getInt(1), rs.getDate(2), rs.getInt(3), rs.getInt(4), rdao.findById(rs.getInt(5)), null));
             }
 
             return alleOVChipkaarten;
