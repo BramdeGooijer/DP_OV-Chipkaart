@@ -1,5 +1,6 @@
 package DAO.Product;
 
+import DAO.OVChipkaart.OVChipkaartDAO;
 import Domein.Product;
 
 import java.sql.Connection;
@@ -8,9 +9,14 @@ import java.sql.SQLException;
 
 public class ProductDAOpsql implements ProductDAO{
     private Connection connection;
+    private OVChipkaartDAO odao;
 
     public ProductDAOpsql(Connection connection) {
         this.connection = connection;
+    }
+
+    public void setOdao(OVChipkaartDAO odao) {
+        this.odao = odao;
     }
 
     @Override

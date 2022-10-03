@@ -1,5 +1,6 @@
 package DAO.OVChipkaart;
 
+import DAO.Product.ProductDAO;
 import DAO.Reiziger.ReizigerDAO;
 import Domein.OVChipkaart;
 import Domein.Reiziger;
@@ -13,6 +14,7 @@ import java.util.List;
 public class OVChipkaartDAOpsql implements OVChipkaartDAO {
     private Connection connection;
     private ReizigerDAO rdao;
+    private ProductDAO pdao;
 
     public OVChipkaartDAOpsql(Connection connection) {
         this.connection = connection;
@@ -20,6 +22,10 @@ public class OVChipkaartDAOpsql implements OVChipkaartDAO {
 
     public void setRdao(ReizigerDAO rdao) {
         this.rdao = rdao;
+    }
+
+    public void setPdao(ProductDAO pdao) {
+        this.pdao = pdao;
     }
 
     @Override
