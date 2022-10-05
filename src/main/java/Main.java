@@ -213,7 +213,7 @@ public class Main {
 
         // Test sla relatie op tussen product en ovchipkaart
         Product product3 = new Product(102, "Banaan", "geel", 15);
-        Reiziger reiziger3 = new Reiziger(102, "B", "de", "Gooijer", Date.valueOf("2004-01-26"))
+        Reiziger reiziger3 = new Reiziger(102, "B", "de", "Gooijer", Date.valueOf("2004-01-26"));
         OVChipkaart ovChipkaart3 = new OVChipkaart(102, Date.valueOf("2050-01-01"), 1, 50, reiziger3);
         ov_chipkaart_product ov_chipkaart_product3 = new ov_chipkaart_product(ovChipkaart3, product3, "aanwezig", Date.valueOf("2000-01-01"));
 
