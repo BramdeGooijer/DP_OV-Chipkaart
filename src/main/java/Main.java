@@ -2,9 +2,9 @@ import DAO.Adres.AdresDAO;
 import DAO.Adres.AdresDAOsql;
 import DAO.OVChipkaart.OVChipkaartDAO;
 import DAO.OVChipkaart.OVChipkaartDAOpsql;
-import Domein.Adres;
-import Domein.OVChipkaart;
-import Domein.Reiziger;
+import DAO.Product.ProductDAO;
+import DAO.Product.ProductDAOpsql;
+import Domein.*;
 import DAO.Reiziger.ReizigerDAO;
 import DAO.Reiziger.ReizigerDAOsql;
 
@@ -23,6 +23,7 @@ public class Main {
             ReizigerDAOsql reizigerDAOsql = new ReizigerDAOsql(db);
             AdresDAOsql adresDAOsql = new AdresDAOsql(db);
             OVChipkaartDAOpsql ovChipkaartDAOpsql = new OVChipkaartDAOpsql(db);
+            ProductDAOpsql productDAOpsql = new ProductDAOpsql(db);
 
             reizigerDAOsql.setAdao(adresDAOsql);
             reizigerDAOsql.setOdao(ovChipkaartDAOpsql);
@@ -30,9 +31,10 @@ public class Main {
             ovChipkaartDAOpsql.setRdao(reizigerDAOsql);
 
             // Hier staan de tests voor reiziger en adres
-            testReizigerDAO(reizigerDAOsql);
-            testAdresDAO(adresDAOsql, reizigerDAOsql);
-            testOVChipkaart(ovChipkaartDAOpsql, reizigerDAOsql);
+//            testReizigerDAO(reizigerDAOsql);
+//            testAdresDAO(adresDAOsql, reizigerDAOsql);
+//            testOVChipkaart(ovChipkaartDAOpsql, reizigerDAOsql);
+            testProduct(productDAOpsql);
 
             db.close();
 
@@ -184,5 +186,36 @@ public class Main {
 
         System.out.println("    [INFO]      OVChipkaarten getoond via de toString van reiziger:");
         System.out.println(rdao.findById(301));
+    }
+
+    public static void testProduct(ProductDAO pdao) {
+        // Test sla product op
+        System.out.println("[TEST] save product");
+        System.out.println("[INFO] Maak nieuw product aan!");
+        Product product1 = new Product(100, "Appel", "rood", 5);
+        System.out.println("[INFO] Sla product op!");
+        System.out.println(pdao.save(product1));
+
+        // Test update product
+        System.out.println("\n[TEST] update product");
+        System.out.println("[INFO] Maak nieuw product aan!");
+        Product product2 = new Product(101, "Peer", "groen", 10);
+        System.out.println("[INFO] Sla product op!");
+        System.out.println(pdao.save(product2));
+        System.out.println("[INFO] update het product!");
+        product2 = new Product(101, "Peer", "geel", 1);
+        System.out.println(pdao.update(product2));
+
+        // Test delete het product
+        System.out.println("\n[TEST] delete het product1 en product2");
+        System.out.println(pdao.delete(product1));
+        System.out.println(pdao.delete(product2));
+
+        // Test sla relatie op tussen product en ovchipkaart
+        Product product3 = new Product(102, "Banaan", "geel", 15);
+        Reiziger reiziger3 = new Reiziger(102, "B", "de", "Gooijer", Date.valueOf("2004-01-26"))
+        OVChipkaart ovChipkaart3 = new OVChipkaart(102, Date.valueOf("2050-01-01"), 1, 50, reiziger3);
+        ov_chipkaart_product ov_chipkaart_product3 = new ov_chipkaart_product(ovChipkaart3, product3, "aanwezig", Date.valueOf("2000-01-01"));
+
     }
 }

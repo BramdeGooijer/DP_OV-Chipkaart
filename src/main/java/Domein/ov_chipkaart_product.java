@@ -17,6 +17,8 @@ public class ov_chipkaart_product {
         product.add_ov_chipkaart_product(this);
     }
 
+
+
     public String toString() {
         return String.format("ov_chipkaart_product {%s, %s}", this.status, this.last_update);
     }

@@ -25,6 +25,10 @@ public class OVChipkaart {
         alle_ov_chipkaart_producten.add(product);
     }
 
+    public void delete_ov_chipkaart_product(ov_chipkaart_product product) {
+        alle_ov_chipkaart_producten.remove(product);
+    }
+
     public int getKaart_nummer() {
         return kaart_nummer;
     }
