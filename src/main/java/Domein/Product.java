@@ -25,6 +25,10 @@ public class Product {
         alle_ov_chipkaart_producten.remove(product);
     }
 
+    public List<ov_chipkaart_product> getAlleOVProducten() {
+        return alle_ov_chipkaart_producten;
+    }
+
     public int getProduct_nummer() {
         return product_nummer;
     }
@@ -39,5 +43,17 @@ public class Product {
 
     public int getPrijs() {
         return prijs;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
+    public void setBeschrijving(String beschrijving) {
+        this.beschrijving = beschrijving;
+    }
+
+    public void setPrijs(int prijs) {
+        this.prijs = prijs;
     }
 }

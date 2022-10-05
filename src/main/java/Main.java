@@ -34,7 +34,7 @@ public class Main {
 //            testReizigerDAO(reizigerDAOsql);
 //            testAdresDAO(adresDAOsql, reizigerDAOsql);
 //            testOVChipkaart(ovChipkaartDAOpsql, reizigerDAOsql);
-            testProduct(productDAOpsql);
+            testProduct(productDAOpsql, ovChipkaartDAOpsql, reizigerDAOsql);
 
             db.close();
 
@@ -188,34 +188,56 @@ public class Main {
         System.out.println(rdao.findById(301));
     }
 
-    public static void testProduct(ProductDAO pdao) {
-        // Test sla product op
-        System.out.println("[TEST] save product");
-        System.out.println("[INFO] Maak nieuw product aan!");
-        Product product1 = new Product(100, "Appel", "rood", 5);
-        System.out.println("[INFO] Sla product op!");
-        System.out.println(pdao.save(product1));
-
-        // Test update product
-        System.out.println("\n[TEST] update product");
-        System.out.println("[INFO] Maak nieuw product aan!");
-        Product product2 = new Product(101, "Peer", "groen", 10);
-        System.out.println("[INFO] Sla product op!");
-        System.out.println(pdao.save(product2));
-        System.out.println("[INFO] update het product!");
-        product2 = new Product(101, "Peer", "geel", 1);
-        System.out.println(pdao.update(product2));
-
-        // Test delete het product
-        System.out.println("\n[TEST] delete het product1 en product2");
-        System.out.println(pdao.delete(product1));
-        System.out.println(pdao.delete(product2));
+    public static void testProduct(ProductDAO pdao, OVChipkaartDAO odao, ReizigerDAO rdao) {
+//        // Test sla product op
+//        System.out.println("[TEST] save product");
+//        System.out.println("[INFO] Maak nieuw product aan!");
+//        Product product1 = new Product(100, "Appel", "rood", 5);
+//        System.out.println("[INFO] Sla product op!");
+//        System.out.println(pdao.save(product1));
+//
+//        // Test update product
+//        System.out.println("\n[TEST] update product");
+//        System.out.println("[INFO] Maak nieuw product aan!");
+//        Product product2 = new Product(101, "Peer", "groen", 10);
+//        System.out.println("[INFO] Sla product op!");
+//        System.out.println(pdao.save(product2));
+//        System.out.println("[INFO] update het product!");
+//        product2 = new Product(101, "Peer", "geel", 1);
+//        System.out.println(pdao.update(product2));
+//
+//        // Test delete het product
+//        System.out.println("\n[TEST] delete het product1 en product2");
+//        System.out.println(pdao.delete(product1));
+//        System.out.println(pdao.delete(product2));
 
         // Test sla relatie op tussen product en ovchipkaart
-        Product product3 = new Product(102, "Banaan", "geel", 15);
-        Reiziger reiziger3 = new Reiziger(102, "B", "de", "Gooijer", Date.valueOf("2004-01-26"));
-        OVChipkaart ovChipkaart3 = new OVChipkaart(102, Date.valueOf("2050-01-01"), 1, 50, reiziger3);
+        System.out.println("[TEST] sla product op met relatie tussen ovchipkaart en product");
+        System.out.println("[INFO] maak reiziger aan en sla die op");
+        Reiziger reiziger3 = new Reiziger(500, "B", "de", "Gooijer", Date.valueOf("2004-01-26"));
+        System.out.println(rdao.save(reiziger3));
+        System.out.println("[INFO] maak een ovchipkaart en sla die op");
+        OVChipkaart ovChipkaart3 = new OVChipkaart(500, Date.valueOf("2050-01-01"), 1, 50, reiziger3);
+        System.out.println(odao.save(ovChipkaart3));
+        System.out.println("[INFO] maak een product en ov_chipkaart_product aan een sla deze op");
+        Product product3 = new Product(500, "Banaan", "geel", 15);
         ov_chipkaart_product ov_chipkaart_product3 = new ov_chipkaart_product(ovChipkaart3, product3, "aanwezig", Date.valueOf("2000-01-01"));
+        System.out.println(pdao.save(product3));
+
+//        // Test delete product met relatie naar ovchipkaart
+//        System.out.println("\n[TEST] delete product met relatie");
+//        System.out.println("[INFO] delete het product");
+//        System.out.println(pdao.delete(product3));
+
+        // Test update een product met een relatie tussen ovchipkaart en product
+        System.out.println("\n[TEST] update product met relatie ovchipkaart");
+        product3.setNaam("coole kikker");
+        product3.setPrijs(300);
+        product3.setBeschrijving("fietsers");
+        ov_chipkaart_product3.setStatus("hoi");
+        ov_chipkaart_product3.setLast_update(Date.valueOf("2022-10-05"));
+        System.out.println(pdao.update(product3));
+
 
     }
 }
