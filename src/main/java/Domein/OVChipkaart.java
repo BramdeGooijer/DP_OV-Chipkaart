@@ -10,7 +10,7 @@ public class OVChipkaart {
     private int klasse;
     private int saldo;
     private Reiziger reiziger;
-    private List<ov_chipkaart_product> alle_ov_chipkaart_producten = new ArrayList<>();
+    private List<Product> alleProducten = new ArrayList<>();
 
     public OVChipkaart(int kaart_nummer, Date geldig_tot, int klasse, int saldo, Reiziger reiziger) {
         this.kaart_nummer = kaart_nummer;
@@ -21,12 +21,16 @@ public class OVChipkaart {
         reiziger.addOVChipkaart(this);
     }
 
-    public void add_ov_chipkaart_product(ov_chipkaart_product product) {
-        alle_ov_chipkaart_producten.add(product);
+    public List<Product> getAlleProducten() {
+        return alleProducten;
     }
 
-    public void delete_ov_chipkaart_product(ov_chipkaart_product product) {
-        alle_ov_chipkaart_producten.remove(product);
+    public void addProduct(Product product) {
+        alleProducten.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        alleProducten.remove(product);
     }
 
     public int getKaart_nummer() {

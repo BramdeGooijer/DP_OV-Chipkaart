@@ -34,7 +34,8 @@ public class Main {
 //            testReizigerDAO(reizigerDAOsql);
 //            testAdresDAO(adresDAOsql, reizigerDAOsql);
 //            testOVChipkaart(ovChipkaartDAOpsql, reizigerDAOsql);
-            testProduct(productDAOpsql, ovChipkaartDAOpsql, reizigerDAOsql);
+//            testProduct(productDAOpsql, ovChipkaartDAOpsql, reizigerDAOsql);
+            testFindByOVChipkaart(productDAOpsql);
 
             db.close();
 
@@ -221,7 +222,6 @@ public class Main {
         System.out.println(odao.save(ovChipkaart3));
         System.out.println("[INFO] maak een product en ov_chipkaart_product aan een sla deze op");
         Product product3 = new Product(500, "Banaan", "geel", 15);
-        ov_chipkaart_product ov_chipkaart_product3 = new ov_chipkaart_product(ovChipkaart3, product3, "aanwezig", Date.valueOf("2000-01-01"));
         System.out.println(pdao.save(product3));
 
 //        // Test delete product met relatie naar ovchipkaart
@@ -234,10 +234,17 @@ public class Main {
         product3.setNaam("coole kikker");
         product3.setPrijs(300);
         product3.setBeschrijving("fietsers");
-        ov_chipkaart_product3.setStatus("hoi");
-        ov_chipkaart_product3.setLast_update(Date.valueOf("2022-10-05"));
+//        ov_chipkaart_product3.setStatus("hoi");
+//        ov_chipkaart_product3.setLast_update(Date.valueOf("2022-10-05"));
         System.out.println(pdao.update(product3));
 
 
+    }
+
+    public static void testFindByOVChipkaart(ProductDAO pdao) {
+        OVChipkaart myOVChipkaart = new OVChipkaart(35283, Date.valueOf("2000-01-01"), 1, 1, new Reiziger(1, "b", "de", "gooijer", Date.valueOf("2000-01-01")));
+        System.out.println(pdao.findByOVChipkaart(myOVChipkaart));
+
+        System.out.println("\n" + pdao.findAll());
     }
 }

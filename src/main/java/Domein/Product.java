@@ -8,7 +8,7 @@ public class Product {
     private String naam;
     private String beschrijving;
     private int prijs;
-    private List<ov_chipkaart_product> alle_ov_chipkaart_producten = new ArrayList<>();
+    private List<OVChipkaart> alleOVChipkaarten = new ArrayList<>();
 
     public Product(int product_nummer, String naam, String beschrijving, int prijs) {
         this.product_nummer = product_nummer;
@@ -17,16 +17,16 @@ public class Product {
         this.prijs = prijs;
     }
 
-    public void add_ov_chipkaart_product(ov_chipkaart_product product) {
-        alle_ov_chipkaart_producten.add(product);
+    public List<OVChipkaart> getAlleOVChipkaarten() {
+        return alleOVChipkaarten;
     }
 
-    public void delete_ov_chipkaart_product(ov_chipkaart_product product) {
-        alle_ov_chipkaart_producten.remove(product);
+    public void addOVChipkaart(OVChipkaart ovChipkaart) {
+        alleOVChipkaarten.add(ovChipkaart);
     }
 
-    public List<ov_chipkaart_product> getAlleOVProducten() {
-        return alle_ov_chipkaart_producten;
+    public void removeOVChipkaart(OVChipkaart ovChipkaart) {
+        alleOVChipkaarten.remove(ovChipkaart);
     }
 
     public int getProduct_nummer() {
@@ -55,5 +55,10 @@ public class Product {
 
     public void setPrijs(int prijs) {
         this.prijs = prijs;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s, %s, %s", this.product_nummer, this.naam, this.beschrijving, this.prijs);
     }
 }
