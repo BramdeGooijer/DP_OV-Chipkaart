@@ -220,9 +220,12 @@ public class Main {
         System.out.println("[INFO] maak een ovchipkaart en sla die op");
         OVChipkaart ovChipkaart3 = new OVChipkaart(500, Date.valueOf("2050-01-01"), 1, 50, reiziger3);
         System.out.println(odao.save(ovChipkaart3));
-        System.out.println("[INFO] maak een product en ov_chipkaart_product aan een sla deze op");
+        System.out.println("[INFO] maak een product aan een sla deze op");
         Product product3 = new Product(500, "Banaan", "geel", 15);
+        product3.addOVChipkaart(ovChipkaart3);
         System.out.println(pdao.save(product3));
+
+        System.out.println(pdao.findAll());
 
 //        // Test delete product met relatie naar ovchipkaart
 //        System.out.println("\n[TEST] delete product met relatie");
