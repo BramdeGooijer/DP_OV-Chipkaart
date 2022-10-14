@@ -8,7 +8,9 @@ public class Product {
     private String naam;
     private String beschrijving;
     private int prijs;
-    private List<OVChipkaart> alleOVChipkaarten = new ArrayList<>();
+
+//    maak dit list integer naar ovchipkaart
+    private List<Integer> alleOVChipkaarten = new ArrayList<>();
 
     public Product(int product_nummer, String naam, String beschrijving, int prijs) {
         this.product_nummer = product_nummer;
@@ -17,12 +19,12 @@ public class Product {
         this.prijs = prijs;
     }
 
-    public List<OVChipkaart> getAlleOVChipkaarten() {
+    public List<Integer> getAlleOVChipkaarten() {
         return alleOVChipkaarten;
     }
 
     public void addOVChipkaart(OVChipkaart ovChipkaart) {
-        alleOVChipkaarten.add(ovChipkaart);
+        alleOVChipkaarten.add(ovChipkaart.getKaart_nummer());
     }
 
     public void removeOVChipkaart(OVChipkaart ovChipkaart) {

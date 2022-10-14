@@ -36,10 +36,10 @@ public class ProductDAOpsql implements ProductDAO{
             ps.execute();
             ps.close();
 
-            for (OVChipkaart perOVChipkaart : product.getAlleOVChipkaarten()) {
+            for (Integer perOVChipkaart : product.getAlleOVChipkaarten()) {
                 String sqlQuery2 = "INSERT INTO ov_chipkaart_product VALUES(?, ?, ?, ?)";
                 PreparedStatement ps2 = connection.prepareStatement(sqlQuery2);
-                ps2.setInt(1, perOVChipkaart.getKaart_nummer());
+                ps2.setInt(1, perOVChipkaart);
                 ps2.setInt(2, product.getProduct_nummer());
                 ps2.setString(3, "positive");
                 ps2.setDate(4, Date.valueOf("2000-01-01"));
@@ -69,7 +69,8 @@ public class ProductDAOpsql implements ProductDAO{
             ps.setInt(3, product.getPrijs());
             ps.setInt(4, product.getProduct_nummer());
 
-            for(OVChipkaart perOVChipkaart : product.getAlleOVChipkaarten()) {
+//          dit moet weg want product is child anders stack overflow
+            for(Integer perOVChipkaart : product.getAlleOVChipkaarten()) {
                 String sqlQuery2 = "UPDATE ov_chipkaart_product SET status=?, last_update=? WHERE product_nummer=?";
                 PreparedStatement ps2 = connection.prepareStatement(sqlQuery2);
                 ps2.setString(1, "negative");
@@ -103,7 +104,7 @@ public class ProductDAOpsql implements ProductDAO{
             ps.execute();
             ps.close();
 
-            for(OVChipkaart perOVChipkaart : product.getAlleOVChipkaarten()) {
+            for(Integer perOVChipkaart : product.getAlleOVChipkaarten()) {
                 String sqlQuery2 = "DELETE FROM ov_chipkaart_product WHERE product_nummer=?";
                 PreparedStatement ps2 = connection.prepareStatement(sqlQuery2);
                 ps2.setInt(1, product.getProduct_nummer());
@@ -136,6 +137,7 @@ public class ProductDAOpsql implements ProductDAO{
                 allProducts.add(product);
             }
 
+//            voeg de ovchipkaarten aan product
 
             ps.close();
             rs.close();
@@ -159,6 +161,8 @@ public class ProductDAOpsql implements ProductDAO{
                 Product product = new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
                 allProducts.add(product);
             }
+
+//            voeg de ovchipkaarten aan product
 
             return allProducts;
         } catch(Exception e) {

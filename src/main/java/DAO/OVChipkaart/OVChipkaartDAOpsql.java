@@ -44,6 +44,7 @@ public class OVChipkaartDAOpsql implements OVChipkaartDAO {
             ps.execute();
             ps.close();
 
+//            dit in product maar loop wel door producten heen om te saven
             for (Product perProduct : ovChipkaart.getAlleProducten()) {
                 String sqlQuery2 = "insert into ov_chipkaart_product values(?, ?, ?, ?)";
                 PreparedStatement ps2 = connection.prepareStatement(sqlQuery2);
