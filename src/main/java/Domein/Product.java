@@ -23,12 +23,12 @@ public class Product {
         return alleOVChipkaarten;
     }
 
-    public void addOVChipkaart(OVChipkaart ovChipkaart) {
-        alleOVChipkaarten.add(ovChipkaart.getKaart_nummer());
+    public void addOVChipkaart(int ovChipkaartNummer) {
+        alleOVChipkaarten.add(ovChipkaartNummer);
     }
 
-    public void removeOVChipkaart(OVChipkaart ovChipkaart) {
-        alleOVChipkaarten.remove(ovChipkaart);
+    public void removeOVChipkaart(int ovChipkaartNummer) {
+        alleOVChipkaarten.remove(ovChipkaartNummer);
     }
 
     public int getProduct_nummer() {
@@ -61,6 +61,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("%s, %s, %s, %s", this.product_nummer, this.naam, this.beschrijving, this.prijs);
+        return String.format("%s, %s, %s, %s, %s", this.product_nummer, this.naam, this.beschrijving, this.prijs, this.alleOVChipkaarten);
     }
 }

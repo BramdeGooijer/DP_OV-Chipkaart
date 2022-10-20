@@ -134,6 +134,7 @@ public class ProductDAOpsql implements ProductDAO{
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Product product = new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+                product.addOVChipkaart(rs.getInt(5));
                 allProducts.add(product);
             }
 
@@ -151,7 +152,7 @@ public class ProductDAOpsql implements ProductDAO{
 
     public List<Product> findAll() {
         try {
-            String sqlQuery = "select * from product";
+            String sqlQuery = "select * from product p join ov_chipkaart_product ocp on p.product_nummer = ocp.product_nummer";
             PreparedStatement ps = connection.prepareStatement(sqlQuery);
 
             ResultSet rs = ps.executeQuery();
@@ -159,6 +160,7 @@ public class ProductDAOpsql implements ProductDAO{
 
             while (rs.next()) {
                 Product product = new Product(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+                product.addOVChipkaart(rs.getInt(5));
                 allProducts.add(product);
             }
 

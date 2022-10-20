@@ -46,15 +46,7 @@ public class OVChipkaartDAOpsql implements OVChipkaartDAO {
 
 //            dit in product maar loop wel door producten heen om te saven
             for (Product perProduct : ovChipkaart.getAlleProducten()) {
-                String sqlQuery2 = "insert into ov_chipkaart_product values(?, ?, ?, ?)";
-                PreparedStatement ps2 = connection.prepareStatement(sqlQuery2);
-                ps2.setInt(1, ovChipkaart.getKaart_nummer());
-                ps2.setInt(2, perProduct.getProduct_nummer());
-                ps2.setString(3, "positive");
-                ps2.setDate(4, Date.valueOf("2001-01-01"));
-
-                ps2.execute();
-                ps2.close();
+                pdao.save(perProduct);
             }
 
             return true;
@@ -76,15 +68,19 @@ public class OVChipkaartDAOpsql implements OVChipkaartDAO {
             ps.setInt(4, ovChipkaart.getKaart_nummer());
 
             for (Product perProduct : ovChipkaart.getAlleProducten()) {
-                String sqlQuery2 = "update ov_chipkaart_product set status=?, last_update=? where kaart_nummer=?";
-                PreparedStatement ps2 = connection.prepareStatement(sqlQuery2);
-                ps2.setString(1, "negative");
-                ps2.setDate(2, Date.valueOf("2001-01-01"));
-                ps2.setInt(3, ovChipkaart.getKaart_nummer());
-
-                ps2.execute();
-                ps2.close();
+                pdao.update(perProduct);
             }
+
+//            for (Product perProduct : ovChipkaart.getAlleProducten()) {
+//                String sqlQuery2 = "update ov_chipkaart_product set status=?, last_update=? where kaart_nummer=?";
+//                PreparedStatement ps2 = connection.prepareStatement(sqlQuery2);
+//                ps2.setString(1, "negative");
+//                ps2.setDate(2, Date.valueOf("2001-01-01"));
+//                ps2.setInt(3, ovChipkaart.getKaart_nummer());
+//
+//                ps2.execute();
+//                ps2.close();
+//            }
 
 
             ps.execute();
@@ -106,14 +102,18 @@ public class OVChipkaartDAOpsql implements OVChipkaartDAO {
             ps.execute();
             ps.close();
 
-            for(Product perProduct : ovChipkaart.getAlleProducten()) {
-                String sqlQuery2 = "delete from ov_chipkaart_product where kaart_nummer=?";
-                PreparedStatement ps2 = connection.prepareStatement(sqlQuery);
-                ps2.setInt(1, ovChipkaart.getKaart_nummer());
-
-                ps2.execute();
-                ps2.close();
+            for (Product perProduct : ovChipkaart.getAlleProducten()) {
+                pdao.delete(perProduct);
             }
+
+//            for(Product perProduct : ovChipkaart.getAlleProducten()) {
+//                String sqlQuery2 = "delete from ov_chipkaart_product where kaart_nummer=?";
+//                PreparedStatement ps2 = connection.prepareStatement(sqlQuery);
+//                ps2.setInt(1, ovChipkaart.getKaart_nummer());
+//
+//                ps2.execute();
+//                ps2.close();
+//            }
 
             return true;
         } catch (Exception e) {

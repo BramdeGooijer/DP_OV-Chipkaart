@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        String url = "jdbc:postgresql:ovchip";
+        String url = "jdbc:postgresql://localhost:5432/ovchip";
         String username = "postgres";
         String password = "HBOICTBram";
 
@@ -35,7 +35,8 @@ public class Main {
 //            testAdresDAO(adresDAOsql, reizigerDAOsql);
 //            testOVChipkaart(ovChipkaartDAOpsql, reizigerDAOsql);
 //            testProduct(productDAOpsql, ovChipkaartDAOpsql, reizigerDAOsql);
-            testFindByOVChipkaart(productDAOpsql);
+//            testFindByOVChipkaart(productDAOpsql);
+            testProductFindAll(productDAOpsql);
 
             db.close();
 
@@ -222,7 +223,7 @@ public class Main {
         System.out.println(odao.save(ovChipkaart3));
         System.out.println("[INFO] maak een product aan een sla deze op");
         Product product3 = new Product(500, "Banaan", "geel", 15);
-        product3.addOVChipkaart(ovChipkaart3);
+        product3.addOVChipkaart(ovChipkaart3.getKaart_nummer());
         System.out.println(pdao.save(product3));
 
         System.out.println(pdao.findAll());
@@ -249,5 +250,9 @@ public class Main {
         System.out.println(pdao.findByOVChipkaart(myOVChipkaart));
 
         System.out.println("\n" + pdao.findAll());
+    }
+
+    public static void testProductFindAll(ProductDAO pdao) {
+        System.out.println(pdao.findAll());
     }
 }
